@@ -37,7 +37,6 @@ const TodoApp = () => {
   const [editingTaskId, setEditingTaskId] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('All');
 
-  // Load tasks and categories from local storage on mount
   useEffect(() => {
     const storedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
     const storedCategories = JSON.parse(localStorage.getItem('categories')) || [];
@@ -45,7 +44,6 @@ const TodoApp = () => {
     dispatchCategories({ type: 'SET_CATEGORIES', payload: storedCategories });
   }, []);
 
-  // Save tasks and categories to local storage on update
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
     localStorage.setItem('categories', JSON.stringify(categories));
@@ -110,6 +108,26 @@ const TodoApp = () => {
 return (
     <div>
       <div>
+      <div>
+        <h2>Category Management</h2>
+        <ul>
+          {categories.map(category => (
+            <li key={category.id}>
+              {category.name}
+              <button onClick={() => handleRemoveCategory(category.id)}>Remove</button>
+            </li>
+          ))}
+        </ul>
+        <div>
+          <input
+            type="text"
+            placeholder="New Category"
+            onChange={e => setNewTask({ ...newTask, category: e.target.value })}
+          />
+          <button onClick={() => handleAddCategory(newTask.category)}>Add Category</button>
+        </div>
+      </div>
+      
         <h2>Task List</h2>
         <div>
           <label>Filter by Category:</label>
@@ -161,25 +179,6 @@ return (
           {editingTaskId !== null && (
             <button onClick={handleCancelEdit}>Cancel Edit</button>
           )}
-        </div>
-      </div>
-      <div>
-        <h2>Category Management</h2>
-        <ul>
-          {categories.map(category => (
-            <li key={category.id}>
-              {category.name}
-              <button onClick={() => handleRemoveCategory(category.id)}>Remove</button>
-            </li>
-          ))}
-        </ul>
-        <div>
-          <input
-            type="text"
-            placeholder="New Category"
-            onChange={e => setNewTask({ ...newTask, category: e.target.value })}
-          />
-          <button onClick={() => handleAddCategory(newTask.category)}>Add Category</button>
         </div>
       </div>
     </div>
