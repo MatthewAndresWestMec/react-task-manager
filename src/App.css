@@ -23,18 +23,18 @@ font-family: 'Open Sans', sans-serif;
   padding: 0;
   height: 20vh;
   width: auto;
-  overflow-y: auto; /* Use auto to show scrollbar only when needed */
+  overflow-y: auto; 
 }
 
 .tasks::-webkit-scrollbar,
 .categories::-webkit-scrollbar {
-  width: 10px; /* Set the width of the scrollbar */
+  width: 10px; 
 }
 
 .tasks::-webkit-scrollbar-thumb,
 .categories::-webkit-scrollbar-thumb {
-  background-color: #363636; /* Set the color of the scrollbar thumb */
-  border-radius: 10px; /* Make the scrollbar thumb rounded */
+  background-color: #363636; 
+  border-radius: 10px; 
 }
 
 .tasksList,
