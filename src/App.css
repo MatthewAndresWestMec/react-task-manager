@@ -1,38 +1,129 @@
-.App {
-  text-align: center;
+.container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
 }
+body{
+  font-family: 'Inter', sans-serif;
+font-family: 'Open Sans', sans-serif;
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.manageContainer,
+.createContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  width: 45%;
+  text-align: center;
+}
+
+.tasks,
+.categories {
+  list-style-type: none;
+  padding: 0;
+  height: 20vh;
+  width: auto;
+  overflow-y: auto; /* Use auto to show scrollbar only when needed */
+}
+
+.tasks::-webkit-scrollbar,
+.categories::-webkit-scrollbar {
+  width: 10px; /* Set the width of the scrollbar */
+}
+
+.tasks::-webkit-scrollbar-thumb,
+.categories::-webkit-scrollbar-thumb {
+  background-color: #363636; /* Set the color of the scrollbar thumb */
+  border-radius: 10px; /* Make the scrollbar thumb rounded */
+}
+
+.tasksList,
+.categoriesList {
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}
+
+.taskBtns,
+.categoriesList {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+
+.removeBtn,
+.editBtn {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.removeBtn {
+  background-color: #555555;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.editBtn {
+  background-color: #333333;
+  color: white;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+input[type='text'],
+select {
+  margin-bottom: 10px;
+  padding: 5px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+}
+
+button {
+  padding: 7px 15px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+h2,
+p {
+  color: #363636;
+}
+
+select {
+  width: 150px;
+}
+
+.container {
+  background-color: #f3f3f3;
+}
+
+.manageContainer,
+.createContainer {
+  background-color: #cccccc;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.tasksList,
+.categoriesList {
+  background-color: #fff;
+  width: 20vw;
+}
+
+.removeBtn,
+.editBtn,
+button {
+  background-color: #555555;
+  color: white;
+}
+
+.removeBtn:hover,
+.editBtn:hover,
+button:hover {
+  background-color: #333333;
 }

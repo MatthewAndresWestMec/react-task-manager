@@ -154,12 +154,14 @@ const App = () => {
             value={newTask.name}
             onChange={e => setNewTask({ ...newTask, name: e.target.value })}
           />
+          <br></br>
           <input
             type="text"
             placeholder="Task Description"
             value={newTask.description}
             onChange={e => setNewTask({ ...newTask, description: e.target.value })}
           />
+          <br></br>
           <select
             value={newTask.category}
             onChange={e => setNewTask({ ...newTask, category: e.target.value })}
@@ -192,7 +194,6 @@ const App = () => {
           </div>
         </div>
       </div>
-      
     </div>
   );
 };
