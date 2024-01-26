@@ -1,6 +1,10 @@
-# Getting Started with Create React App
+# A custom task manager made using react's useReducer, useEffect, and useState
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Add categories and assign tasks to them. Edit to update category / tasks.
+
+# Author
+
+This project was bootstrapped with [MatthewAndresWestMec](https://github.com/MatthewAndresWestMec).
 
 ## Available Scripts
 
