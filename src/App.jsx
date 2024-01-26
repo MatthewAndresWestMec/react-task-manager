@@ -1,4 +1,5 @@
 import React, { useReducer, useState, useEffect } from 'react';
+import './App.css';
 
 const taskReducer = (state, action) => {
   switch (action.type) {
@@ -30,9 +31,12 @@ const categoryReducer = (state, action) => {
   }
 };
 
-const TodoApp = () => {
-  const [tasks, dispatchTasks] = useReducer(taskReducer, []);
-  const [categories, dispatchCategories] = useReducer(categoryReducer, []);
+const App = () => {
+  const initialTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+  const initialCategories = JSON.parse(localStorage.getItem('categories')) || [];
+
+  const [tasks, dispatchTasks] = useReducer(taskReducer, initialTasks);
+  const [categories, dispatchCategories] = useReducer(categoryReducer, initialCategories);
   const [newTask, setNewTask] = useState({ name: '', description: '', category: '' });
   const [editingTaskId, setEditingTaskId] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -40,7 +44,6 @@ const TodoApp = () => {
   useEffect(() => {
     const storedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
     const storedCategories = JSON.parse(localStorage.getItem('categories')) || [];
-    console.log(storedTasks)
     dispatchTasks({ type: 'SET_TASKS', payload: storedTasks });
     dispatchCategories({ type: 'SET_CATEGORIES', payload: storedCategories });
   }, []);
@@ -65,14 +68,12 @@ const TodoApp = () => {
     }
 
     if (editingTaskId !== null) {
-      // Update existing task
       dispatchTasks({
         type: 'UPDATE_TASK',
         payload: { id: editingTaskId, updatedTask: newTask },
       });
       setEditingTaskId(null);
     } else {
-      // Add new task
       dispatchTasks({ type: 'ADD_TASK', payload: { ...newTask, id: Date.now() } });
     }
     setNewTask({ name: '', description: '', category: '' });
@@ -80,7 +81,6 @@ const TodoApp = () => {
 
   const handleRemoveTask = taskId => {
     dispatchTasks({ type: 'REMOVE_TASK', payload: taskId });
-    // Clear editing state if the task being edited is removed
     if (editingTaskId === taskId) {
       setEditingTaskId(null);
       setNewTask({ name: '', description: '', category: '' });
@@ -106,32 +106,13 @@ const TodoApp = () => {
       dispatchCategories({ type: 'ADD_CATEGORY', payload: { name: newCategory, id: Date.now() } });
     }
   };
-return (
-    <div>
-      <div>
-      <div>
-        <h2>Category Management</h2>
-        <ul>
-          {categories.map(category => (
-            <li key={category.id}>
-              {category.name}
-              <button onClick={() => handleRemoveCategory(category.id)}>Remove</button>
-            </li>
-          ))}
-        </ul>
+
+  return (
+    <div className='container'>
+      <div className='manageContainer'>
         <div>
-          <input
-            type="text"
-            placeholder="New Category"
-            onChange={e => setNewTask({ ...newTask, category: e.target.value })}
-          />
-          <button onClick={() => handleAddCategory(newTask.category)}>Add Category</button>
-        </div>
-      </div>
-      
-        <h2>Task List</h2>
-        <div>
-          <label>Filter by Category:</label>
+          <h2>Task Manager</h2>
+          <p>Filter by Category:</p>
           <select value={selectedCategory} onChange={handleCategoryChange}>
             <option value="All">All</option>
             {categories.map(category => (
@@ -140,16 +121,32 @@ return (
               </option>
             ))}
           </select>
+          <ul className='tasks'>
+            {filteredTasks.map(task => (
+              <li key={task.id} className='tasksList'>
+                {task.name} - {task.description} - {task.category}
+                <div className='taskBtns'>
+                  <button className='removeBtn' onClick={() => handleRemoveTask(task.id)}>Remove</button>
+                  <button className= 'editBtn' onClick={() => handleEditTask(task)}>Edit</button>
+                </div>
+              </li>
+            ))}
+          </ul>  
         </div>
-        <ul>
-          {filteredTasks.map(task => (
-            <li key={task.id}>
-              {task.name} - {task.description} - {task.category}
-              <button onClick={() => handleRemoveTask(task.id)}>Remove</button>
-              <button onClick={() => handleEditTask(task)}>Edit</button>
-            </li>
-          ))}
-        </ul>
+        <div>
+          <h2>Category Manager</h2>
+          <ul className='categories'>
+            {categories.map(category => (
+              <li className='categoriesList' key={category.id}>
+                {category.name}
+                <button className='removeBtn' onClick={() => handleRemoveCategory(category.id)}>Remove</button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <div className='createContainer'>
+        <h2>Task Creation</h2>
         <div>
           <input
             type="text"
@@ -174,6 +171,7 @@ return (
               </option>
             ))}
           </select>
+          <br />
           <button onClick={handleAddTask}>
             {editingTaskId !== null ? 'Update Task' : 'Add Task'}
           </button>
@@ -181,9 +179,22 @@ return (
             <button onClick={handleCancelEdit}>Cancel Edit</button>
           )}
         </div>
+        <div>
+          <h2>Category Creation</h2>
+          <div>
+            <input
+              type="text"
+              placeholder="New Category"
+              onChange={e => setNewTask({ ...newTask, category: e.target.value })}
+            />
+            <br />
+            <button onClick={() => handleAddCategory(newTask.category)}>Add Category</button>
+          </div>
+        </div>
       </div>
+      
     </div>
   );
 };
 
-export default TodoApp;
+export default App;
