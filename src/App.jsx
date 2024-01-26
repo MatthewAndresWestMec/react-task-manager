@@ -40,6 +40,7 @@ const TodoApp = () => {
   useEffect(() => {
     const storedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
     const storedCategories = JSON.parse(localStorage.getItem('categories')) || [];
+    console.log(storedTasks)
     dispatchTasks({ type: 'SET_TASKS', payload: storedTasks });
     dispatchCategories({ type: 'SET_CATEGORIES', payload: storedCategories });
   }, []);
